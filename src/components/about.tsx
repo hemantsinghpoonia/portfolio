@@ -13,11 +13,11 @@ export function About() {
       <div className="grid grid-cols-1 md:grid-cols-12 gap-layout-bento-gap">
         <Card className="md:col-span-7">
           <p className="text-body-lg text-muted-foreground mb-6">
-            I&apos;m a developer driven by the intersection of technical
-            precision and meaningful user experiences. As a recent B.Tech
-            graduate, I specialize in building robust, scalable systems that
-            solve real-world problems. I don&apos;t just write code; I architect
-            solutions that are reliable, performant, and delightful to use.
+            I&apos;m a full-stack software engineer focused on building SaaS
+            products, with hands-on experience across modern web development,
+            system architecture, authentication, data modeling, and AI-assisted
+            workflows. I do my best work on real applications, where frontend,
+            backend, database, and automation all have to fit together cleanly.
           </p>
         </Card>
 
@@ -29,11 +29,12 @@ export function About() {
                 Education
               </h4>
               <p className="font-heading text-foreground font-semibold mb-2 text-lg">
-                B.Tech in Computer Science
+                B.Tech in Computer Science Engineering (AI & ML)
               </p>
               <p className="text-sm text-muted-foreground">
-                Recently graduated from Meerut, India with a focus on modern web
-                architecture.
+                Meerut Institute of Engineering and Technology, 2022–2026,
+                graduating with a 7.85 CGPA — with a focus on modern web
+                architecture throughout.
               </p>
             </div>
           </Card>

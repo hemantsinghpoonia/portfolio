@@ -4,11 +4,18 @@ import { Card } from "@/components/ui/card";
 const skillGroups = [
   {
     title: "Frontend",
-    skills: ["Next.js", "React", "Tailwind CSS", "Shadcn UI"],
+    skills: ["Next.js", "React", "Zustand", "Zod", "Tailwind CSS", "Shadcn UI"],
   },
   {
     title: "Backend",
-    skills: ["Fastify", "Express", "Node.js", "RAG", "RBAC"],
+    skills: [
+      "Fastify",
+      "Express",
+      "Node.js",
+      "API & SDK Integration",
+      "RAG",
+      "RBAC",
+    ],
   },
   {
     title: "Database & Auth",

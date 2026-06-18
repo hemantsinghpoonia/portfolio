@@ -7,7 +7,7 @@ export function Footer() {
       <div className="pb-12 flex flex-col md:flex-row justify-between items-center gap-layout-gutter text-muted-foreground">
         <div className="font-heading text-headline-md text-foreground">HS</div>
         <div className="text-body-md">
-          © {new Date().getFullYear()} Hemant Singh. Built with technical
+          © {new Date().getFullYear()} Hemant Singh Poonia. Built with technical
           precision.
         </div>
         <div className="flex gap-6 text-body-md">

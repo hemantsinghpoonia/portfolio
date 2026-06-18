@@ -64,7 +64,7 @@ export const metadata: Metadata = {
     description:
       "Portfolio of Hemant Singh, a full-stack engineer specializing in Next.js, Node.js, and scalable backend systems.",
     images: ["/og-image.png"],
-    creator: "@hemantsinghpoonia",
+    creator: "@hemantspoonia",
   },
   robots: {
     index: true,
@@ -75,9 +75,6 @@ export const metadata: Metadata = {
       "max-image-preview": "large",
       "max-snippet": -1,
     },
-  },
-  verification: {
-    google: "REPLACE_WITH_GOOGLE_SEARCH_CONSOLE_CODE",
   },
   icons: {
     icon: "/favicon.ico",
