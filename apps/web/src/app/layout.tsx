@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Playfair_Display, Geist } from "next/font/google";
 import { Sidebar } from "@/components/sidebar";
 import { MobileNav } from "@/components/mobile-nav";
@@ -20,6 +20,12 @@ const geist = Geist({
 
 const SITE_URL = "https://hemantsingh.dev";
 
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  viewportFit: "cover",
+};
+
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
@@ -27,7 +33,7 @@ export const metadata: Metadata = {
     template: "%s | Hemant Singh",
   },
   description:
-    "Portfolio of Hemant Singh, a full-stack software engineer specializing in Next.js, Node.js, and scalable backend systems. Building robust, clean, production-grade web applications.",
+    "Portfolio of Hemant Singh, full-stack engineer specializing in Next.js, Node.js & scalable backend systems. Building robust, production-grade web apps.",
   keywords: [
     "Hemant Singh",
     "Hemant Singh Poonia",

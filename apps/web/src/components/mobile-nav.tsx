@@ -20,7 +20,10 @@ export function MobileNav() {
   return (
     <>
       <nav className="mobile-topbar md:hidden">
-        <Link href="/#hero" className="font-heading text-headline-md font-semibold text-foreground">
+        <Link
+          href="/#hero"
+          className="font-heading text-headline-md font-semibold text-foreground"
+        >
           HS
         </Link>
         <Button
@@ -36,21 +39,21 @@ export function MobileNav() {
 
       {open && (
         <div className="mobile-menu-sheet md:hidden">
-          <Card className="mx-4 w-[calc(100%-2rem)] max-w-sm text-center">
-            <ul className="space-y-8 text-center">
-              {SECTIONS.map(({ id, label }) => (
-                <li key={id}>
-                  <Link
-                    href={`/#${id}`}
-                    className="font-heading text-headline-md text-foreground hover:text-brand-strong transition-colors"
-                    onClick={() => setOpen(false)}
-                  >
-                    {label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </Card>
+          {/* <Card className="mx-4 w-[calc(100%-2rem)] max-w-sm text-center"> */}
+          <ul className="space-y-8 text-center">
+            {SECTIONS.map(({ id, label }) => (
+              <li key={id}>
+                <Link
+                  href={`/#${id}`}
+                  className="font-heading text-headline-md text-foreground hover:text-brand-strong transition-colors"
+                  onClick={() => setOpen(false)}
+                >
+                  {label}
+                </Link>
+              </li>
+            ))}
+          </ul>
+          {/* </Card> */}
         </div>
       )}
     </>

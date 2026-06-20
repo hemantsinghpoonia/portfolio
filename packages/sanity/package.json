@@ -1,0 +1,20 @@
+{
+  "name": "@repo/sanity-schema",
+  "version": "0.1.0",
+  "private": true,
+  "main": "./index.ts",
+  "types": "./index.ts",
+  "scripts": {
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@sanity/image-url": "^2.1.1",
+    "@sanity/types": "^4.10.0",
+    "next-sanity": "^13.1.1",
+    "sanity": "^6.1.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.19.43",
+    "typescript": "^5"
+  }
+}

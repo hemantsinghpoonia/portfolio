@@ -375,6 +375,7 @@
 
   html {
     @apply font-sans;
+    overflow-x: clip;
   }
 
   h1,
@@ -473,7 +474,6 @@
     inset: 0;
     z-index: 40;
     display: flex;
-    align-items: center;
     justify-content: center;
     padding-top: var(--site-topbar-height);
     background: var(--surface);
@@ -707,12 +707,14 @@
     background: color-mix(in oklch, var(--outline-variant) 20%, transparent);
   }
 
-  .blog-carousel-track {
+  .blog-carousel-track,
+  .no-scrollbar {
     scrollbar-width: none;
     -ms-overflow-style: none;
   }
 
-  .blog-carousel-track::-webkit-scrollbar {
+  .blog-carousel-track::-webkit-scrollbar,
+  .no-scrollbar::-webkit-scrollbar {
     display: none;
   }
 

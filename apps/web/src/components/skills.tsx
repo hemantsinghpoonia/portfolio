@@ -42,7 +42,7 @@ export function Skills() {
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-layout-bento-gap">
         {skillGroups.map((group) => (
-          <Card key={group.title}>
+          <Card key={group.title} className="overflow-scroll no-scrollbar">
             <h4 className="text-label-sm text-brand-strong uppercase tracking-wider mb-6 border-b border-outline-variant pb-2">
               {group.title}
             </h4>

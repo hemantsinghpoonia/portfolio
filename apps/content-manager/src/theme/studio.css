@@ -1,0 +1,35 @@
+/**
+ * Loads the same two typefaces apps/web uses (Playfair Display for
+ * headings, Geist for body/UI text) and applies them across the Studio
+ * chrome. Sanity Studio doesn't expose a typography slot in
+ * buildLegacyTheme, so this is plain CSS layered on top of it.
+ */
+@import url("https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&display=swap");
+
+:root {
+  --portfolio-font-body: "Geist", "Inter", system-ui, sans-serif;
+  --portfolio-font-display: "Playfair Display", Georgia, serif;
+}
+
+body,
+[data-ui="Text"],
+[data-ui="Button"] {
+  font-family: var(--portfolio-font-body);
+}
+
+/* Document titles, pane headers, and dialog titles read as headings
+   in the portfolio's voice — Playfair Display, same as h1-h4 on the
+   live site. Scoped to Sanity UI's own heading primitive so we don't
+   accidentally restyle every bold span in the document editor. */
+[data-ui="Heading"] {
+  font-family: var(--portfolio-font-display);
+  letter-spacing: -0.01em;
+}
+
+/* Subtle warm-paper tint behind the main content pane, echoing the
+   noise-textured --surface background on the live site, without
+   fighting Sanity UI's own elevation/contrast system in form fields. */
+[data-ui="Card"][data-scheme="light"] {
+  background-color: #fbf9f5;
+}

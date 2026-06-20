@@ -16,7 +16,7 @@ export function ProjectImageShowcase({ images }: { images: ProjectImage[] }) {
           alt={images[activeImage].alt}
           fill
           sizes="(max-width: 1024px) 100vw, 50vw"
-          className="object-cover"
+          className="object-fill md:object-contain lg:object-fill"
           priority={false}
         />
       </div>

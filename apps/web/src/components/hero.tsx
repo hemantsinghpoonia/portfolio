@@ -100,7 +100,10 @@ export function Hero() {
 
 function DecorativeTexture() {
   return (
-    <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
+    <div
+      className="absolute inset-0 pointer-events-none hidden lg:block"
+      aria-hidden="true"
+    >
       {/* top-right swatch */}
       <svg className="absolute -top-8 -right-8 h-24 w-24 md:h-28 md:w-28">
         <defs>
