@@ -4,7 +4,6 @@ import { Projects } from "@/components/projects";
 import { Skills } from "@/components/skills";
 import { BlogTeaser } from "@/components/blog-teaser";
 import { Contact } from "@/components/contact";
-import { Footer } from "@/components/footer";
 
 export default function HomePage() {
   return (
@@ -15,7 +14,6 @@ export default function HomePage() {
       <Skills />
       <BlogTeaser />
       <Contact />
-      <Footer />
     </>
   );
 }

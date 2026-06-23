@@ -52,13 +52,6 @@ export const postType = defineType({
       validation: (rule) => rule.required(),
     }),
     defineField({
-      name: "tags",
-      title: "Tags",
-      type: "array",
-      group: "content",
-      of: [{ type: "reference", to: [{ type: "tag" }] }],
-    }),
-    defineField({
       name: "publishedAt",
       title: "Published at",
       type: "datetime",
@@ -66,22 +59,7 @@ export const postType = defineType({
       initialValue: () => new Date().toISOString(),
       validation: (rule) => rule.required(),
     }),
-    defineField({
-      name: "status",
-      title: "Status",
-      type: "string",
-      group: "content",
-      options: {
-        list: [
-          { title: "Draft", value: "draft" },
-          { title: "Published", value: "published" },
-        ],
-        layout: "radio",
-      },
-      initialValue: "draft",
-      validation: (rule) => rule.required(),
-    }),
-    { ...bodyField, group: "content" },
+    defineField({ ...bodyField, group: "content" }),
     defineField({
       name: "seo",
       title: "SEO",
@@ -90,12 +68,14 @@ export const postType = defineType({
     }),
   ],
   preview: {
-    select: { title: "title", media: "mainImage", status: "status", date: "publishedAt" },
-    prepare({ title, media, status, date }) {
-      const formattedDate = date ? new Date(date).toLocaleDateString() : "No date";
+    select: { title: "title", media: "mainImage", date: "publishedAt" },
+    prepare({ title, media, date }) {
+      const formattedDate = date
+        ? new Date(date).toLocaleDateString()
+        : "No date";
       return {
         title,
-        subtitle: `${status === "published" ? "Published" : "Draft"} · ${formattedDate}`,
+        subtitle: `${formattedDate}`,
         media,
       };
     },

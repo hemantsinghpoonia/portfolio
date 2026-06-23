@@ -1,12 +1,19 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
   reactCompiler: true,
-};
-
-module.exports = {
-  allowedDevOrigins: ["192.168.29.13"],
+  allowedDevOrigins: process.env.ALLOWED_DEV_ORIGIN
+    ? [process.env.ALLOWED_DEV_ORIGIN]
+    : undefined,
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "cdn.sanity.io",
+      },
+    ],
+  },
+  transpilePackages: ["@repo/sanity-schema"],
 };
 
 export default nextConfig;

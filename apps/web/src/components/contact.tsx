@@ -54,6 +54,8 @@ export function Contact() {
               <a
                 href="https://linkedin.com/in/hemantsinghpoonia"
                 aria-label="LinkedIn"
+                target="_blank"
+                rel="noopener noreferrer"
               >
                 <Linkedin size={18} />
               </a>
@@ -67,6 +69,8 @@ export function Contact() {
               <a
                 href="https://github.com/hemantsinghpoonia"
                 aria-label="GitHub"
+                target="_blank"
+                rel="noopener noreferrer"
               >
                 <Github size={18} />
               </a>
@@ -77,7 +81,12 @@ export function Contact() {
               size="icon"
               className="rounded-full"
             >
-              <a href="https://x.com/hemantspoonia" aria-label="X (Twitter)">
+              <a
+                href="https://x.com/hemantspoonia"
+                aria-label="X (Twitter)"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 <Twitter size={18} />
               </a>
             </Button>

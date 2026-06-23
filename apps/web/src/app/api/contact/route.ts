@@ -4,6 +4,7 @@ import brevo from "@/lib/brevo";
 import { contactRateLimit } from "@/lib/ratelimit";
 import { headers } from "next/headers";
 import { contactSchema } from "@/lib/validations/contact";
+import { escapeHtml } from "@/lib/utils";
 
 type ContactPayload = {
   name: string;
@@ -12,6 +13,9 @@ type ContactPayload = {
 };
 
 async function notifyViaBrevo(data: ContactPayload) {
+  const safeName = escapeHtml(data.name);
+  const safeEmail = escapeHtml(data.email);
+  const safeMessage = escapeHtml(data.message).replace(/\n/g, "<br />");
   const res = await brevo.transactionalEmails.sendTransacEmail({
     sender: {
       email: "noreply@hemantsingh.dev",
@@ -20,7 +24,7 @@ async function notifyViaBrevo(data: ContactPayload) {
     to: [{ email: "hello@hemantsingh.dev" }],
     replyTo: { email: data.email, name: data.name },
     subject: `New portfolio message from ${data.name}`,
-    htmlContent: `<p><strong>From:</strong> ${data.name} (${data.email})</p><p>${data.message}</p>`,
+    htmlContent: `<p><strong>From:</strong> ${safeName} (${safeEmail})</p><p>${safeMessage}</p>`,
   });
 
   if (!res.messageId) {

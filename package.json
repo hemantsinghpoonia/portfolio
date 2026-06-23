@@ -7,9 +7,7 @@
     "dev:studio": "pnpm --filter content-manager dev",
     "build:web": "pnpm --filter web build",
     "build:studio": "pnpm --filter content-manager build",
-    "build": "pnpm --filter web build && pnpm --filter content-manager build",
-    "lint": "pnpm -r lint",
-    "typecheck": "pnpm -r typecheck"
+    "build": "pnpm --filter web build && pnpm --filter content-manager build"
   },
   "devDependencies": {
     "typescript": "^5"

@@ -2,7 +2,13 @@ import type { Metadata, Viewport } from "next";
 import { Playfair_Display, Geist } from "next/font/google";
 import { Sidebar } from "@/components/sidebar";
 import { MobileNav } from "@/components/mobile-nav";
+import { draftMode } from "next/headers";
+import { VisualEditing } from "next-sanity/visual-editing";
 import "./globals.css";
+import { Footer } from "@/components/footer";
+import { TooltipProvider } from "@/components/ui/tooltip";
+import { JsonLd } from "@/components/json-ld";
+import { personSchema, websiteSchema } from "@/lib/jsonld";
 
 const playfair = Playfair_Display({
   subsets: ["latin"],
@@ -86,86 +92,31 @@ export const metadata: Metadata = {
     icon: "/favicon.ico",
     apple: "/apple-touch-icon.png",
   },
-  manifest: "/site.webmanifest",
+  manifest: "/manifest.webmanifest",
 };
 
-function PersonJsonLd() {
-  const jsonLd = {
-    "@context": "https://schema.org",
-    "@type": "Person",
-    name: "Hemant Singh",
-    alternateName: "Hemant Singh Poonia",
-    url: SITE_URL,
-    // image: `${SITE_URL}/profile.jpg`,
-    jobTitle: "Full-Stack Engineer",
-    description:
-      "Full-stack engineer specializing in Next.js, Node.js, and scalable backend systems.",
-    address: {
-      "@type": "PostalAddress",
-      addressLocality: "Meerut",
-      addressCountry: "IN",
-    },
-    sameAs: [
-      "https://linkedin.com/in/hemantsinghpoonia",
-      "https://github.com/hemantsinghpoonia",
-      "https://x.com/hemantspoonia",
-    ],
-    knowsAbout: [
-      "Next.js",
-      "React",
-      "Node.js",
-      "PostgreSQL",
-      "MongoDB",
-      "System Design",
-      "Backend Architecture",
-    ],
-  };
-
-  return (
-    <script
-      type="application/ld+json"
-      // eslint-disable-next-line react/no-danger
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-    />
-  );
-}
-
-function WebsiteJsonLd() {
-  const jsonLd = {
-    "@context": "https://schema.org",
-    "@type": "WebSite",
-    name: "Hemant Singh",
-    url: SITE_URL,
-    author: {
-      "@type": "Person",
-      name: "Hemant Singh",
-    },
-  };
-
-  return (
-    <script
-      type="application/ld+json"
-      // eslint-disable-next-line react/no-danger
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-    />
-  );
-}
-
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const { isEnabled: isDraftMode } = await draftMode();
   return (
     <html lang="en" className={`${playfair.variable} ${geist.variable}`}>
       <head>
-        <PersonJsonLd />
-        <WebsiteJsonLd />
+        <JsonLd schema={personSchema} />
+        <JsonLd schema={websiteSchema} />
       </head>
       <body className="font-app text-body-md antialiased relative bg-background text-foreground">
-        <Sidebar />
-        <MobileNav />
-        <main className="app-shell">{children}</main>
+        <TooltipProvider>
+          <Sidebar />
+          <MobileNav />
+          <main className="app-shell">
+            {children}
+            <Footer />
+          </main>
+          {isDraftMode && <VisualEditing />}
+        </TooltipProvider>
       </body>
     </html>
   );

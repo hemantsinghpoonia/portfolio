@@ -1,12 +1,14 @@
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
-import { getLatestPosts, formatDate } from "@/lib/posts";
+import { getLatestPosts } from "@/lib/posts";
 import { BlogCarousel } from "@/components/blog-carousel";
-import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { BlogCard } from "./blog-card";
 
-export function BlogTeaser() {
-  const posts = getLatestPosts(3);
+export async function BlogTeaser() {
+  const posts = await getLatestPosts(3);
+
+  if (posts.length === 0) return null;
 
   return (
     <section id="blog" className="mb-32">
@@ -31,51 +33,22 @@ export function BlogTeaser() {
 
       <div className="hidden md:grid lg:hidden grid-cols-2 gap-layout-bento-gap">
         {posts.map((post) => (
-          <Card key={post.slug} className="group cursor-pointer p-6">
-            <Link href={`/blog/${post.slug}`} className="block">
-              <div className="text-xs text-muted-foreground text-label-sm mb-4">
-                {formatDate(post.date)} • {post.readingTime}
-              </div>
-              <h4 className="font-heading text-lg text-foreground font-semibold mb-4 group-hover:text-brand-strong transition-colors">
-                {post.title}
-              </h4>
-              <p className="text-body-md text-muted-foreground mb-6 line-clamp-3">
-                {post.excerpt}
-              </p>
-              <span className="inline-flex items-center gap-2 text-brand-strong text-label-sm uppercase tracking-wider">
-                Read Article{" "}
-                <ArrowRight
-                  size={16}
-                  className="transition-transform group-hover:translate-x-1"
-                />
-              </span>
-            </Link>
-          </Card>
+          <BlogCard
+            key={post._id}
+            post={post}
+            density="compact"
+            sizes="(min-width: 768px) 50vw, 100vw"
+          />
         ))}
       </div>
 
       <div className="hidden lg:grid grid-cols-1 md:grid-cols-3 gap-layout-bento-gap">
         {posts.map((post) => (
-          <Card key={post.slug} className="group cursor-pointer p-8">
-            <Link href={`/blog/${post.slug}`} className="block">
-              <div className="text-sm text-muted-foreground text-label-sm mb-4">
-                {formatDate(post.date)} • {post.readingTime}
-              </div>
-              <h4 className="font-heading text-lg text-foreground font-semibold mb-4 group-hover:text-brand-strong transition-colors">
-                {post.title}
-              </h4>
-              <p className="text-body-md text-muted-foreground mb-6 line-clamp-3">
-                {post.excerpt}
-              </p>
-              <span className="inline-flex items-center gap-2 text-brand-strong text-label-sm uppercase tracking-wider">
-                Read Article{" "}
-                <ArrowRight
-                  size={16}
-                  className="transition-transform group-hover:translate-x-1"
-                />
-              </span>
-            </Link>
-          </Card>
+          <BlogCard
+            key={post._id}
+            post={post}
+            sizes="(min-width: 1024px) 33vw, 100vw"
+          />
         ))}
       </div>
 

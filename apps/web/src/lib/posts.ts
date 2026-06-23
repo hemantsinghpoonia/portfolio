@@ -1,68 +1,43 @@
-export type BlogPost = {
-  slug: string;
-  title: string;
-  excerpt: string;
-  content: string; // markdown or plain paragraphs; render as needed
-  date: string; // ISO format, e.g. "2024-05-15"
-  readingTime: string;
-  tags: string[];
-  medium?: string; // optional: link to the synced Medium republish
-};
+import {
+  allPostsQuery,
+  latestPostsQuery,
+  postBySlugQuery,
+  allPostSlugsQuery,
+} from "@repo/sanity-schema";
+import { estimateReadingTime, type Post } from "@repo/sanity-schema";
+import { sanityFetch } from "@/lib/sanity-fetch";
+import { sanityClient } from "@repo/sanity-schema/client";
 
-// Source of truth for now. Swap this for a CMS/DB query later —
-// every consumer (homepage teaser, /blog index, /blog/[slug]) goes
-// through this one function so the swap is a single-file change.
-const posts: BlogPost[] = [
-  {
-    slug: "mastering-nextjs-server-components",
-    title: "Mastering Next.js Server Components",
-    excerpt:
-      "A deep dive into how server components work under the hood and how to leverage them for maximum performance.",
-    content: "Full article content goes here...",
-    date: "2024-05-15",
-    readingTime: "5 min read",
-    tags: ["Next.js", "React", "Performance"],
-  },
-  {
-    slug: "resilient-rbac-better-auth",
-    title: "Building a Resilient RBAC System with Better-Auth",
-    excerpt:
-      "Step-by-step guide to implementing robust Role-Based Access Control in modern full-stack applications.",
-    content: "Full article content goes here...",
-    date: "2024-04-28",
-    readingTime: "7 min read",
-    tags: ["Auth", "Backend", "Security"],
-  },
-  {
-    slug: "scaling-fastify-realtime-workers",
-    title: "Scaling Fastify for Real-time Workers",
-    excerpt:
-      "Techniques for optimizing Fastify to handle high-throughput real-time tasks without breaking a sweat.",
-    content: "Full article content goes here...",
-    date: "2024-04-10",
-    readingTime: "6 min read",
-    tags: ["Fastify", "Backend", "Performance"],
-  },
-];
+export type PostList = Pick<
+  Post,
+  "_id" | "title" | "slug" | "publishedAt" | "excerpt" | "mainImage"
+>[];
+type SlugEntry = { slug: string; publishedAt: string };
 
-export function getAllPosts(): BlogPost[] {
-  return [...posts].sort(
-    (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
+//These two functions don't fetch the post body, as they are not needed for cards
+export async function getAllPosts(): Promise<PostList> {
+  return sanityFetch<PostList>(allPostsQuery, {}, ["blog-content"]);
+}
+
+export async function getLatestPosts(count: number): Promise<PostList> {
+  return sanityFetch<PostList>(latestPostsQuery, { count }, ["blog-content"]);
+}
+
+//This is used to get Full Post data
+export async function getPostBySlug(slug: string): Promise<Post | null> {
+  return sanityFetch<Post | null>(postBySlugQuery, { slug }, [
+    "blog-content",
+    `blog-post:${slug}`,
+  ]);
+}
+
+//This will be used to generate the static params and generateStaticParams doesn't allow us to use the draftMode() function, so we have to use this sanityClient.fetch instead of sanityFetch.
+export async function getAllPostSlugs(): Promise<SlugEntry[]> {
+  return sanityClient.fetch<SlugEntry[]>(
+    allPostSlugsQuery,
+    {},
+    {
+      next: { revalidate: 60 * 60 * 3, tags: ["blog-content"] },
+    },
   );
-}
-
-export function getLatestPosts(count: number): BlogPost[] {
-  return getAllPosts().slice(0, count);
-}
-
-export function getPostBySlug(slug: string): BlogPost | undefined {
-  return posts.find((p) => p.slug === slug);
-}
-
-export function formatDate(iso: string): string {
-  return new Date(iso).toLocaleDateString("en-US", {
-    month: "long",
-    day: "numeric",
-    year: "numeric",
-  });
 }

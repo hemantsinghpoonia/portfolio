@@ -1,16 +1,12 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import Link from "next/link";
-import { ArrowRight } from "lucide-react";
-import type { BlogPost } from "@/lib/posts";
-import { formatDate } from "@/lib/posts";
-import { Card } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import { PostList } from "@/lib/posts";
+import { BlogCard } from "./blog-card";
 
 type Props = {
-  posts: BlogPost[];
+  posts: PostList;
 };
 
 export function BlogCarousel({ posts }: Props) {
@@ -73,45 +69,35 @@ export function BlogCarousel({ posts }: Props) {
         className="flex gap-4 overflow-x-auto scroll-smooth snap-x snap-mandatory pb-3 -mx-4 px-4 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
       >
         {posts.map((post, index) => (
-          <Card
-            key={post.slug}
+          <div
+            key={post._id}
             ref={(node) => {
               itemRefs.current[index] = node;
             }}
-            className="group shrink-0 basis-[74%] sm:basis-[58%] max-w-[19.5rem] snap-center p-6"
+            className="shrink-0 basis-[74%] sm:basis-[58%] max-w-[19.5rem] snap-center"
           >
-            <div className="text-xs text-muted-foreground text-label-sm mb-4">
-              {formatDate(post.date)} • {post.readingTime}
-            </div>
-            <h4 className="font-heading text-lg text-foreground font-semibold mb-4 group-hover:text-brand-strong transition-colors">
-              {post.title}
-            </h4>
-            <p className="text-body-md text-muted-foreground mb-6 line-clamp-3">
-              {post.excerpt}
-            </p>
-            <Button
-              asChild
-              variant="ghost"
-              className="px-0 h-auto text-brand-strong hover:bg-transparent hover:text-brand-strong"
-            >
-              <Link href={`/blog/${post.slug}`}>
-                Read Article <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />
-              </Link>
-            </Button>
-          </Card>
+            <BlogCard
+              key={post._id}
+              post={post}
+              density="compact"
+              sizes="74vw"
+            />
+          </div>
         ))}
       </div>
 
       <div className="mt-4 flex items-center justify-center gap-2">
         {posts.map((post, index) => (
           <button
-            key={post.slug}
+            key={post._id}
             type="button"
             aria-label={`View article ${index + 1}`}
             onClick={() => scrollToIndex(index)}
             className={cn(
               "h-2.5 rounded-full transition-all duration-200",
-              activeIndex === index ? "w-7 bg-brand-strong" : "w-2.5 bg-outline-variant"
+              activeIndex === index
+                ? "w-7 bg-brand-strong"
+                : "w-2.5 bg-outline-variant",
             )}
           />
         ))}

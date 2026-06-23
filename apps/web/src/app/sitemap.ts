@@ -1,10 +1,19 @@
 import type { MetadataRoute } from "next";
-import { getAllPosts } from "@/lib/posts";
+import { allPostSlugsQuery } from "@repo/sanity-schema";
+import { sanityClient } from "@repo/sanity-schema/client";
 
 const SITE_URL = "https://hemantsingh.dev";
 
-export default function sitemap(): MetadataRoute.Sitemap {
-  const posts = getAllPosts();
+type SlugEntry = { slug: string; publishedAt: string };
+
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  const posts = await sanityClient.fetch<SlugEntry[]>(
+    allPostSlugsQuery,
+    {},
+    {
+      next: { revalidate: 60 * 60 * 3, tags: ["blog-content"] },
+    },
+  );
 
   const staticRoutes: MetadataRoute.Sitemap = [
     {
@@ -23,7 +32,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   const postRoutes: MetadataRoute.Sitemap = posts.map((post) => ({
     url: `${SITE_URL}/blog/${post.slug}`,
-    lastModified: new Date(post.date),
+    lastModified: new Date(post.publishedAt),
     changeFrequency: "monthly",
     priority: 0.6,
   }));

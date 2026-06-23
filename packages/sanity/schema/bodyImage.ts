@@ -33,6 +33,7 @@ export const bodyImageType = defineType({
         layout: "radio",
       },
       initialValue: "contained",
+      validation: (rule) => rule.required().error("Layout is required"),
     }),
   ],
   preview: {

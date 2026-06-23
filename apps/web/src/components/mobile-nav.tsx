@@ -4,14 +4,13 @@ import { useState } from "react";
 import Link from "next/link";
 import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
 
 const SECTIONS = [
-  { id: "hero", label: "Home" },
-  { id: "about", label: "About" },
-  { id: "projects", label: "Projects" },
-  { id: "blog", label: "Blog" },
-  { id: "contact", label: "Contact" },
+  { id: "hero", label: "Home", href: "/#hero" },
+  { id: "about", label: "About", href: "/#about" },
+  { id: "projects", label: "Projects", href: "/#projects" },
+  { id: "blog", label: "Blog ↗", href: "/blog" },
+  { id: "contact", label: "Contact", href: "/#contact" },
 ];
 
 export function MobileNav() {
@@ -39,12 +38,11 @@ export function MobileNav() {
 
       {open && (
         <div className="mobile-menu-sheet md:hidden">
-          {/* <Card className="mx-4 w-[calc(100%-2rem)] max-w-sm text-center"> */}
           <ul className="space-y-8 text-center">
-            {SECTIONS.map(({ id, label }) => (
+            {SECTIONS.map(({ id, label, href }) => (
               <li key={id}>
                 <Link
-                  href={`/#${id}`}
+                  href={href}
                   className="font-heading text-headline-md text-foreground hover:text-brand-strong transition-colors"
                   onClick={() => setOpen(false)}
                 >
@@ -53,7 +51,6 @@ export function MobileNav() {
               </li>
             ))}
           </ul>
-          {/* </Card> */}
         </div>
       )}
     </>

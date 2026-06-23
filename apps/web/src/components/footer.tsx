@@ -14,24 +14,32 @@ export function Footer() {
           <a
             className="hover:text-brand-strong transition-colors"
             href="https://linkedin.com/in/hemantsinghpoonia"
+            target="_blank"
+            rel="noopener noreferrer"
           >
             LinkedIn
           </a>
           <a
             className="hover:text-brand-strong transition-colors"
             href="https://github.com/hemantsinghpoonia"
+            target="_blank"
+            rel="noopener noreferrer"
           >
             GitHub
           </a>
           <a
             className="hover:text-brand-strong transition-colors"
             href="https://x.com/hemantspoonia"
+            target="_blank"
+            rel="noopener noreferrer"
           >
             𝕏
           </a>
           <a
             className="hover:text-brand-strong transition-colors"
             href="mailto:hello@hemantsingh.dev"
+            target="_blank"
+            rel="noopener noreferrer"
           >
             Email
           </a>

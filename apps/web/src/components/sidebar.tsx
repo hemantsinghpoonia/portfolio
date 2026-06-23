@@ -2,27 +2,30 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { Home, User, Briefcase, FileText, Mail } from "lucide-react";
 
 const SECTIONS = [
   { id: "hero", label: "Home", icon: Home },
   { id: "about", label: "About", icon: User },
   { id: "projects", label: "Projects", icon: Briefcase },
-  { id: "blog", label: "Blog", icon: FileText },
+  { id: "blog", label: "Blog ↗", icon: FileText },
   { id: "contact", label: "Contact", icon: Mail },
 ];
 
-export function useActiveSection() {
-  const [active, setActive] = useState("hero");
+function useActiveSection(enabled: boolean) {
+  const [active, setActive] = useState<string | null>(enabled ? "hero" : null);
 
   useEffect(() => {
+    if (!enabled) return;
+
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) setActive(entry.target.id);
         });
       },
-      { rootMargin: "-40% 0px -55% 0px", threshold: 0 }
+      { rootMargin: "-40% 0px -55% 0px", threshold: 0 },
     );
 
     SECTIONS.forEach(({ id }) => {
@@ -31,13 +34,22 @@ export function useActiveSection() {
     });
 
     return () => observer.disconnect();
-  }, []);
+  }, [enabled]);
 
   return active;
 }
 
 export function Sidebar() {
-  const active = useActiveSection();
+  const pathname = usePathname();
+  const isHomepage = pathname === "/";
+  const isBlogRoute = pathname?.startsWith("/blog") ?? false;
+
+  const scrollActive = useActiveSection(isHomepage);
+
+  // On the homepage: highlight whichever section is in view.
+  // On any /blog route: highlight "Blog" by route, ignore scroll position.
+  // Anywhere else: nothing highlighted.
+  const active = isHomepage ? scrollActive : isBlogRoute ? "blog" : null;
 
   return (
     <nav className="site-sidebar">
@@ -52,7 +64,7 @@ export function Sidebar() {
           {SECTIONS.map(({ id, label, icon: Icon }) => (
             <li key={id}>
               <Link
-                href={`/#${id}`}
+                href={id === "blog" ? "/blog" : `/#${id}`}
                 className={`nav-link text-body-md flex items-center justify-center lg:justify-start gap-0 lg:gap-4 transition-colors w-full ${
                   active === id
                     ? "nav-link-active"

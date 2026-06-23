@@ -1,13 +1,5 @@
 import { defineArrayMember, defineField } from "sanity";
 
-/**
- * The main rich-text body field used by `post`.
- *
- * Block-level marks/decorators are kept close to what Medium's importer
- * and semantic HTML actually support well: bold, italic, code, links,
- * h2/h3/h4, blockquote, and ordered/unordered lists. Avoiding exotic
- * marks here is deliberate — it keeps the rendered HTML clean.
- */
 export const bodyField = defineField({
   name: "body",
   title: "Body",
@@ -43,7 +35,10 @@ export const bodyField = defineField({
                 type: "url",
                 title: "URL",
                 validation: (rule: any) =>
-                  rule.required().uri({ allowRelative: false, scheme: ["http", "https", "mailto"] }),
+                  rule.required().uri({
+                    allowRelative: false,
+                    scheme: ["http", "https", "mailto"],
+                  }),
               },
             ],
           },
@@ -51,7 +46,13 @@ export const bodyField = defineField({
       },
     }),
     defineArrayMember({ type: "bodyImage" }),
-    defineArrayMember({ type: "code" }), // registered via @sanity/code-input's codeInput() plugin in apps/studio/sanity.config.ts
+    defineArrayMember({
+      type: "code",
+      options: {
+        withFilename: true,
+        language: "javascript",
+      },
+    }), // registered via @sanity/code-input's codeInput() plugin in apps/content-manager/sanity.config.ts
     defineArrayMember({ type: "youtube" }),
     defineArrayMember({ type: "callout" }),
   ],
