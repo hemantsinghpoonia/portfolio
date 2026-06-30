@@ -2,8 +2,6 @@ import type { Metadata } from "next";
 import { getAllPosts } from "@/lib/posts";
 import { BlogCard } from "@/components/blog-card";
 
-export const revalidate = 10800; // 3 hours
-
 export const metadata: Metadata = {
   title: "Blog",
   description:
@@ -28,7 +26,7 @@ export default async function BlogIndexPage() {
           Blog
         </h1>
       </div>
-      <p className="text-body-lg text-muted-foreground mb-16 max-w-2xl">
+      <p className="text-body-lg text-muted-foreground mb-16 max-w-3xl">
         Notes from the daily grind of full-stack engineering — what broke, what
         I learned, and how I fixed it.
       </p>

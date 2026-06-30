@@ -80,15 +80,15 @@ src/
 
 ## Pages & routes
 
-| Route                     | Description                                                          |
-| ------------------------- | -------------------------------------------------------------------- |
-| `/`                       | Single-page portfolio (Hero, About, Projects, Skills, Blog, Contact) |
-| `/blog`                   | Blog listing, fetched from Sanity                                    |
-| `/blog/[slug]`            | Individual post; ISR with 3-hour revalidation and static params      |
-| `/api/contact`            | POST — validates, rate-limits, persists to DB, fires Brevo email     |
-| `/api/revalidate`         | POST — Sanity webhook; revalidates `blog-content` and per-slug tags  |
-| `/api/draft-mode/enable`  | GET — enables Next.js draft mode for Sanity live preview             |
-| `/api/draft-mode/disable` | GET — disables draft mode and redirects to `/`                       |
+| Route                     | Description                                                            |
+| ------------------------- | ---------------------------------------------------------------------- |
+| `/`                       | Single-page portfolio (Hero, About, Projects, Skills, Blog, Contact)   |
+| `/blog`                   | Blog listing, fetched from Sanity                                      |
+| `/blog/[slug]`            | Individual post; ISR with revalidation based on tags and static params |
+| `/api/contact`            | POST — validates, rate-limits, persists to DB, fires Brevo email       |
+| `/api/revalidate`         | POST — Sanity webhook; revalidates `blog-content` and per-slug tags    |
+| `/api/draft-mode/enable`  | GET — enables Next.js draft mode for Sanity live preview               |
+| `/api/draft-mode/disable` | GET — disables draft mode and redirects to `/`                         |
 
 ## Contact form pipeline
 
@@ -100,7 +100,7 @@ src/
 
 ## Blog pipeline
 
-Blog posts are authored in `apps/content-manager` (Sanity Studio) and fetched by this app via the shared `@repo/sanity-schema` package. The fetch layer uses Next.js's `unstable_cache` with a `blog-content` tag. When a post is published or updated, Sanity fires a webhook to `/api/revalidate`, which calls `revalidateTag` to purge the relevant cache entries on demand — no full redeploys needed.
+Blog posts are authored in `apps/content-manager` (Sanity Studio) and fetched by this app via the shared `@repo/sanity-schema` package. When a post is published or updated, Sanity fires a webhook to `/api/revalidate`, which calls `revalidateTag` to purge the relevant cache entries on demand — no full redeploys needed.
 
 Draft mode is also supported: editors can preview unpublished content in the live site via Sanity's Presentation tool.
 
@@ -134,6 +134,7 @@ cp .env.example .env
 | `SANITY_REVALIDATE_SECRET`      | Yes      | Shared secret to verify Sanity webhook signatures                     |
 | `SANITY_STUDIO_URL`             | Yes      | URL of the deployed Sanity Studio (for CORS and presentation tool)    |
 | `ALLOWED_DEV_ORIGIN`            | No       | Extra allowed origin for `next dev` (useful for cross-device testing) |
+| `APP_URL`                       | Yes      | URL of the web app                                                    |
 
 ### Database setup
 

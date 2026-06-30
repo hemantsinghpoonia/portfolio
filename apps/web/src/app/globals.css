@@ -800,22 +800,22 @@
   }
 
   /* nested list counters */
-  .prose-lists ol {
+  ol.prose-lists {
     list-style-type: decimal;
   }
-  .prose-lists ol ol {
+  ol.prose-lists ol {
     list-style-type: lower-alpha;
   }
-  .prose-lists ol ol ol {
+  ol.prose-lists ol ol {
     list-style-type: lower-roman;
   }
-  .prose-lists ul {
+  ul.prose-lists {
     list-style-type: disc;
   }
-  .prose-lists ul ul {
+  ul.prose-lists ul {
     list-style-type: circle;
   }
-  .prose-lists ul ul ul {
+  ul.prose-lists ul ul {
     list-style-type: square;
   }
 }

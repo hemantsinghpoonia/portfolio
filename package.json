@@ -11,5 +11,10 @@
   },
   "devDependencies": {
     "typescript": "^5"
+  },
+  "pnpm": {
+    "overrides": {
+      "sanity": "^6.2.0"
+    }
   }
 }

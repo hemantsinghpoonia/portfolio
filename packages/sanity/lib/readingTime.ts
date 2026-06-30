@@ -25,7 +25,8 @@ export function estimateReadingTime(body: BodyContent | undefined) {
   for (const block of body) {
     if (isPortableTextBlock(block)) {
       const text = block.children?.map((child) => child.text).join(" ") ?? "";
-      words += text.trim().split(/\s+/).filter(Boolean).length;
+      const cleanText = text.replace(/[\u200B-\u200D\u2060\uFEFF\u00AD]/g, "");
+      words += cleanText.trim().split(/\s+/).filter(Boolean).length;
     } else if (isCodeBlock(block)) {
       // Code reads roughly 2.5x slower per "word" (token) than prose.
       if (!block.code) continue;

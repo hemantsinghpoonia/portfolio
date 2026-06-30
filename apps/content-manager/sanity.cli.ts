@@ -6,7 +6,20 @@ export default defineCliConfig({
     dataset: process.env.SANITY_STUDIO_DATASET,
   },
   deployment: {
-    autoUpdates: true,
+    autoUpdates: false,
     appId: process.env.SANITY_STUDIO_APP_ID,
   },
+  vite: (config) => ({
+    ...config,
+    optimizeDeps: {
+      ...config.optimizeDeps,
+      esbuildOptions: {
+        ...config.optimizeDeps?.esbuildOptions,
+        loader: {
+          ...config.optimizeDeps?.esbuildOptions?.loader,
+          '.js': 'jsx',
+        },
+      },
+    },
+  }),
 })

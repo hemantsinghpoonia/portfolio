@@ -12,11 +12,7 @@ import { getArticleSchema } from "@/lib/jsonld";
 import { JsonLd } from "@/components/json-ld";
 import Link from "next/link";
 
-const SITE_URL = "https://hemantsingh.dev";
-
 type Params = { slug: string };
-
-export const revalidate = 10800; // 3 hours
 
 // This is to use only sanityClient, can never use draftClient
 export async function generateStaticParams(): Promise<Params[]> {
@@ -82,6 +78,7 @@ export default async function BlogPostPage({
 
   if (!post) notFound();
 
+  console.log("post is here :", post);
   const { isEnabled: isDraftMode } = await draftMode();
   const readingTime = estimateReadingTime(post.body);
 

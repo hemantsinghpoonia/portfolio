@@ -23,7 +23,7 @@ export async function sanityFetch<QueryResponse>(
 
   return sanityClient.fetch<QueryResponse>(query, params, {
     next: {
-      revalidate: 60 * 60 * 3, // 3-hour fallback, see below
+      revalidate: false,
       tags,
     },
   });

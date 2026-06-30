@@ -18,8 +18,27 @@ export async function POST(req: NextRequest) {
       return new Response("Bad Request", { status: 400 });
     }
 
-    revalidateTag("blog-content", "max");
-    if (body.slug) revalidateTag(`blog-post:${body.slug}`, "max");
+    revalidateTag("blog-list", "max");
+    const blogResponse = await Promise.all([
+      fetch(`${process.env.APP_URL}/blog`, { cache: "no-store" }),
+      fetch(`${process.env.APP_URL}/sitemap.xml`, { cache: "no-store" }),
+    ]);
+
+    if (!blogResponse[0].ok || !blogResponse[1].ok) {
+      console.error("Failed to warm blog-list tagged cache");
+    }
+    if (body.slug) {
+      revalidateTag(`blog-post:${body.slug}`, "max");
+      const postResponse = await fetch(
+        `${process.env.APP_URL}/blog/${body.slug}`,
+        {
+          cache: "no-store",
+        },
+      );
+      if (!postResponse.ok) {
+        console.error("Failed to warm /blog/{slug}", postResponse.status);
+      }
+    }
 
     return NextResponse.json({ revalidated: true, body });
   } catch (err) {

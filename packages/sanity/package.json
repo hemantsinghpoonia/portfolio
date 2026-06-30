@@ -19,7 +19,7 @@
     "@sanity/image-url": "^2.1.1",
     "@sanity/types": "^4.10.0",
     "next-sanity": "^13.1.1",
-    "sanity": "^6.1.0"
+    "sanity": "^6.2.0"
   },
   "devDependencies": {
     "@types/node": "^20.19.43",

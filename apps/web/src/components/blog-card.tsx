@@ -64,21 +64,29 @@ export function BlogCard({
           }
         />
         <div
-          className={`flex min-w-0 flex-1 flex-col ${padding} ${
-            isHorizontal ? "justify-center" : ""
+          className={`flex min-w-0 flex-1 flex-col ${
+            isHorizontal ? "justify-center p-4" : `${padding}`
           }`}
         >
-          <div className="mb-4 text-label-sm text-muted-foreground">
+          <div
+            className={`text-label-sm text-muted-foreground ${
+              isHorizontal ? "mb-2" : "mb-4"
+            }`}
+          >
             {formatDate(post.publishedAt)}
           </div>
 
           <Tooltip>
             <TooltipTrigger asChild>
-              <h4 className="mb-4 line-clamp-2 font-heading text-lg font-semibold text-foreground transition-colors group-hover:text-brand-strong">
+              <h4
+                className={`line-clamp-2 font-heading text-lg font-semibold text-foreground transition-colors group-hover:text-brand-strong ${
+                  isHorizontal ? "mb-2" : "mb-4"
+                }`}
+              >
                 {post.title}
               </h4>
             </TooltipTrigger>
-            {post.title.length > 60 && (
+            {post.title.length > 70 && (
               <TooltipContent className="max-w-xs">{post.title}</TooltipContent>
             )}
           </Tooltip>
@@ -86,8 +94,8 @@ export function BlogCard({
           <Tooltip>
             <TooltipTrigger asChild>
               <p
-                className={`mb-6 line-clamp-3 text-body-md text-muted-foreground ${
-                  isHorizontal ? "" : "flex-1"
+                className={`line-clamp-3 text-body-md text-muted-foreground ${
+                  isHorizontal ? "mb-3" : "mb-6 flex-1"
                 }`}
               >
                 {post.excerpt}

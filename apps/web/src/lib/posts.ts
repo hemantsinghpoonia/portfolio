@@ -16,17 +16,16 @@ type SlugEntry = { slug: string; publishedAt: string };
 
 //These two functions don't fetch the post body, as they are not needed for cards
 export async function getAllPosts(): Promise<PostList> {
-  return sanityFetch<PostList>(allPostsQuery, {}, ["blog-content"]);
+  return sanityFetch<PostList>(allPostsQuery, {}, ["blog-list"]);
 }
 
 export async function getLatestPosts(count: number): Promise<PostList> {
-  return sanityFetch<PostList>(latestPostsQuery, { count }, ["blog-content"]);
+  return sanityFetch<PostList>(latestPostsQuery, { count }, ["blog-list"]);
 }
 
 //This is used to get Full Post data
 export async function getPostBySlug(slug: string): Promise<Post | null> {
   return sanityFetch<Post | null>(postBySlugQuery, { slug }, [
-    "blog-content",
     `blog-post:${slug}`,
   ]);
 }
@@ -37,7 +36,7 @@ export async function getAllPostSlugs(): Promise<SlugEntry[]> {
     allPostSlugsQuery,
     {},
     {
-      next: { revalidate: 60 * 60 * 3, tags: ["blog-content"] },
+      next: { revalidate: false, tags: ["blog-list"] },
     },
   );
 }
